@@ -1,0 +1,9 @@
+{
+    "name": "fmp-qcm",
+    "version": "1.6.0",
+    "author": "benzaria",
+    "description": "FMP QCM",
+    "license": "CC BY-NC-ND 4.0",
+    "main": "./electron/main.js",
+    "type": "module"
+}

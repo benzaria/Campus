@@ -1,0 +1,11 @@
+node_modules/
+/test*
+dist/
+.vscode/
+.backup/
+web-page/
+*.old
+#git-cmd.*
+tsconfig*.json
+package_.json
+*-cred.json

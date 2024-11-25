@@ -1,0 +1,28 @@
+{
+    "name": "fmp-qcm",
+    "version": "1.6.0",
+    "author": "benzaria",
+    "description": "FMP QCM",
+    "license": "CC BY-NC-ND 4.0",
+    "main": "./electron/main.js",
+    "type": "module",
+    "scripts": {
+        "start": "electron ./src",
+        "test": "electron ./test",
+        "dist": "electron-builder",
+        "dist:win": "electron-builder -w",
+        "dist:mac": "electron-builder -m",
+        "dist:linux": "electron-builder -l",
+        "dist:All": "electron-builder -wml"
+    },
+    "directories": {
+        "test": "./test"
+    },
+    "keywords": [],
+    "devDependencies": {
+        "@google-cloud/local-auth": "^3.0.1",
+        "electron": "^33.2.0",
+        "electron-builder": "^25.1.8",
+        "googleapis": "^144.0.0"
+    }
+}
