@@ -3,8 +3,13 @@
  * import from "./pages/*"
  */
 
+import $ from "jquery";
+
+$('d')
+
 export const api = window.api;
 export const frame = $('main#main-container');
+
 
 /**
  * @param {String} title 

@@ -62,7 +62,7 @@ const db = () => {
         }
         return client;
     }
-}
+
 
 
 /**
@@ -128,8 +128,9 @@ const DEL = async (spreadsheetId, range) => {
 
     return res.data;
 }
+}
 
-export default { db, GET, PUT, DEL };
+export default db;
 
 /*
 const { putValues, getValues, deleteValues } = require('./sheetsApi');

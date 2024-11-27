@@ -62,7 +62,7 @@ const strg = () => {
         }
         return client;
     }
-}
+
 
 /**
  * Uploads or replaces a file in Google Drive.
@@ -148,8 +148,9 @@ async function DEL(fileId) {
     const response = await drive.files.delete({ fileId });
     return response.data;
 }
+}
 
-export default { strg, GET, PUT, DEL };
+export default strg;
 
 /*
 const { putFile, getFile, deleteFile } = require('./driveApi');

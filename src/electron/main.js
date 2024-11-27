@@ -1,8 +1,11 @@
 import { app, BrowserWindow, ipcMain, Notification } from "electron";
 import { decode, encode } from "./cryptor.js";
-import { config as denv} from "dotenv";denv();
+import { config as denv } from "dotenv";denv();
 import { SEND } from "../APIs/mailer.js";
+import strg from "../APIs/storage.js";
+import db from "../APIs/database.js";
 import path from "node:path";
+import $ from "jquery";
 
 export const __dirname = import.meta.dirname;
 
@@ -16,6 +19,22 @@ function preload() {
         return await encode(key, iv, fileName, filePath)
     });
     ipcMain.on('send-email', (evt, { to, sub, html }) => SEND(to, sub, html));
+    ipcMain.handle('database', (evt, verb, {  }) => {
+        switch (verb) {
+            case 'GET': db.GET(); break;
+            case 'PUT': db.PUT(); break;
+            case 'DEL': db.DEL(); break;
+            default: console.error('Error: undefined database API verb', verb); break;
+        }
+    });
+    ipcMain.handle('storage', (evt, verb, {  }) => {
+        switch (verb) {
+            case 'GET': strg.GET(); break;
+            case 'PUT': strg.PUT(); break;
+            case 'DEL': strg.DEL(); break;
+            default: console.error('Error: undefined storage API verb', verb); break;
+        }
+    });
 }
 
 function createWindow() {
