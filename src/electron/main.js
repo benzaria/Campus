@@ -1,18 +1,21 @@
 import { app, BrowserWindow, ipcMain, Notification } from "electron";
 import { decode, encode } from "./cryptor.js";
-import { join } from "node:path";
+import { config as denv} from "dotenv";denv();
+import { SEND } from "../APIs/mailer.js";
+import path from "node:path";
 
 export const __dirname = import.meta.dirname;
 
 function preload() {
-    ipcMain.handle('decode', async (event, { key, iv, fileName, filePath }) => {
+    ipcMain.handle('decode-file', async (evt, { key, iv, fileName, filePath }) => {
         console.log('in main', key, iv, fileName, filePath);
         return await decode(key, iv, fileName, filePath)
     });
-    ipcMain.handle('encode', async (event, { key, iv, fileName, filePath }) => {
+    ipcMain.handle('encode-file', async (evt, { key, iv, fileName, filePath }) => {
         console.log('in main', key, iv, fileName, filePath);
         return await encode(key, iv, fileName, filePath)
     });
+    ipcMain.on('send-email', (evt, { to, sub, html }) => SEND(to, sub, html));
 }
 
 function createWindow() {
@@ -32,7 +35,7 @@ function createWindow() {
             //devTools: false,
             nodeIntegration: true,
             contextIsolation: true,
-            preload: join(__dirname, 'preload.cjs')
+            preload: path.join(__dirname, 'preload.cjs')
         }
     });
     

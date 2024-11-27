@@ -3,12 +3,13 @@ const { contextBridge, ipcRenderer } = require('electron');
 const api = {
     decode: async (data) => {
         console.log('in preload', data);
-        return await ipcRenderer.invoke('decode', data);
+        return await ipcRenderer.invoke('decode-file', data);
     },
     encode: async (data) => {
         console.log('in preload', data);
-        return await ipcRenderer.invoke('encode', data);
+        return await ipcRenderer.invoke('encode-file', data);
     },
+    send: (data) => ipcRenderer.send('send-email', data),
 };
 
 contextBridge.exposeInMainWorld('api', api);

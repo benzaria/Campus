@@ -9,6 +9,9 @@
     "scripts": {
         "start": "electron ./src",
         "test": "electron ./test",
+        "api:mail": "node src/apis/mailer.js",
+        "api:db": "node src/apis/database.js",
+        "api:strg": "node src/apis/storage.js",
         "dist": "electron-builder",
         "dist:win": "electron-builder -w",
         "dist:mac": "electron-builder -m",
@@ -19,10 +22,12 @@
         "test": "./test"
     },
     "keywords": [],
-    "devDependencies": {
-        "@google-cloud/local-auth": "^3.0.1",
+    "dependencies": {
+        "dotenv": "^16.4.5",
         "electron": "^33.2.0",
         "electron-builder": "^25.1.8",
-        "googleapis": "^144.0.0"
+        "nodemailer": "^6.9.16",
+        "googleapis": "^144.0.0",
+        "@google-cloud/local-auth": "^3.0.1"
     }
 }
