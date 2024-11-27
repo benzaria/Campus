@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-    target="win"
+    target="linux"
 else
     target="$1"
 fi
