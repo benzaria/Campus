@@ -14,4 +14,5 @@ tsconfig*.json
 package_.json
 *-cred.json
 credentials.json
+*-token.json
 .env

@@ -1,13 +1,13 @@
 import { app, BrowserWindow, ipcMain, Notification } from "electron";
 import { decode, encode } from "./cryptor.js";
 import { config as denv } from "dotenv";denv();
-import { SEND } from "../APIs/mailer.js";
+import mail from "../APIs/mailer.js";
 import strg from "../APIs/storage.js";
 import db from "../APIs/database.js";
 import path from "node:path";
 import $ from "jquery";
 
-export const __dirname = import.meta.dirname;
+const __dirname = import.meta.dirname;
 
 function preload() {
     ipcMain.handle('decode-file', async (evt, { key, iv, fileName, filePath }) => {
@@ -18,21 +18,21 @@ function preload() {
         console.log('in main', key, iv, fileName, filePath);
         return await encode(key, iv, fileName, filePath)
     });
-    ipcMain.on('send-email', (evt, { to, sub, html }) => SEND(to, sub, html));
-    ipcMain.handle('database', (evt, verb, {  }) => {
+    ipcMain.on('send-email', (evt, { to, sub, html }) => mail(to, sub, html));
+    ipcMain.handle('storage', async (evt, verb, { drv, md, sbmd, tp }) => {
         switch (verb) {
-            case 'GET': db.GET(); break;
-            case 'PUT': db.PUT(); break;
-            case 'DEL': db.DEL(); break;
-            default: console.error('Error: undefined database API verb', verb); break;
+            case 'GET': return await strg.GET(drv, md, sbmd, tp);
+            case 'PUT': return await strg.PUT(drv, md, sbmd, tp);
+            case 'DEL': return await strg.DEL(drv, md, sbmd, tp);
+            default: console.error('Error: undefined storage API verb', verb); break;
         }
     });
-    ipcMain.handle('storage', (evt, verb, {  }) => {
+    ipcMain.handle('database', async (evt, verb, { usr, stt }) => {
         switch (verb) {
-            case 'GET': strg.GET(); break;
-            case 'PUT': strg.PUT(); break;
-            case 'DEL': strg.DEL(); break;
-            default: console.error('Error: undefined storage API verb', verb); break;
+            case 'GET': return await db.GET(usr, stt);
+            case 'PUT': return await db.PUT(usr, stt);
+            case 'DEL': return await db.DEL(usr, stt);
+            default: console.error('Error: undefined database API verb', verb); break;
         }
     });
 }
@@ -61,7 +61,7 @@ function createWindow() {
     try {
         win.loadFile('./app/index.html');
     } catch (error) {
-        throw new Error(`${error}`);
+        throw new Error(error);
     }
 }
 

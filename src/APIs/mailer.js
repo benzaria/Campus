@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 //import { config } from "dotenv";config();
 
-export async function SEND(to, sub, html) {
+export default async function SEND(to, sub, html) {
     // Create a transporter
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
