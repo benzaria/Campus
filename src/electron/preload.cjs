@@ -9,7 +9,8 @@ const api = {
         console.log('in preload', data);
         return await ipcRenderer.invoke('encode-file', data);
     },
-    mail: (data) => ipcRenderer.send('send-email', data),
+    
+    mail: (data) => ipcRenderer.send('mail', data),
     storage: (verb, data) => ipcRenderer.invoke('storage', verb, data),
     database: (verb, data) => ipcRenderer.invoke('database', verb, data),
 };

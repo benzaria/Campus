@@ -1,3 +1,10 @@
+import authorize from "./dist/authApi.js";
+import { listFiles } from "./strg.js";
+
+const auth = await authorize('storage');
+listFiles(auth)
+
+/*
 import db from "./database";
 
 db.GET
@@ -34,3 +41,4 @@ const nodemail = () => {
     // Example usage
     sendEmail('benzaria26@gmail.com');
 }
+*/

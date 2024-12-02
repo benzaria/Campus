@@ -1,41 +1,9 @@
-import { app, BrowserWindow, ipcMain, Notification } from "electron";
-import { decode, encode } from "./cryptor.js";
+import { app, BrowserWindow } from "electron/main";
 import { config as denv } from "dotenv";denv();
-import mail from "../APIs/mailer.js";
-import strg from "../APIs/storage.js";
-import db from "../APIs/database.js";
 import path from "node:path";
 import $ from "jquery";
 
 const __dirname = import.meta.dirname;
-
-function preload() {
-    ipcMain.handle('decode-file', async (evt, { key, iv, fileName, filePath }) => {
-        console.log('in main', key, iv, fileName, filePath);
-        return await decode(key, iv, fileName, filePath)
-    });
-    ipcMain.handle('encode-file', async (evt, { key, iv, fileName, filePath }) => {
-        console.log('in main', key, iv, fileName, filePath);
-        return await encode(key, iv, fileName, filePath)
-    });
-    ipcMain.on('send-email', (evt, { to, sub, html }) => mail(to, sub, html));
-    ipcMain.handle('storage', async (evt, verb, { drv, md, sbmd, tp }) => {
-        switch (verb) {
-            case 'GET': return await strg.GET(drv, md, sbmd, tp);
-            case 'PUT': return await strg.PUT(drv, md, sbmd, tp);
-            case 'DEL': return await strg.DEL(drv, md, sbmd, tp);
-            default: console.error('Error: undefined storage API verb', verb); break;
-        }
-    });
-    ipcMain.handle('database', async (evt, verb, { usr, stt }) => {
-        switch (verb) {
-            case 'GET': return await db.GET(usr, stt);
-            case 'PUT': return await db.PUT(usr, stt);
-            case 'DEL': return await db.DEL(usr, stt);
-            default: console.error('Error: undefined database API verb', verb); break;
-        }
-    });
-}
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -67,7 +35,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
     createWindow();
-    preload();
+    ipcHandler();
     
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {

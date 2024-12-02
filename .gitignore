@@ -15,4 +15,6 @@ package_.json
 *-cred.json
 credentials.json
 *-token.json
+tokens.json
 .env
+*.txt
