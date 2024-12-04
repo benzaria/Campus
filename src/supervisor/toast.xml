@@ -1,0 +1,12 @@
+<toast launch="${appProtocol}://?action=click" activationType="protocol">
+  <visual>
+    <binding template="ToastGeneric">
+      <text>Would you like to proceed?</text>
+      <text>Click Yes or No to continue.</text>
+    </binding>
+  </visual>
+  <actions>
+    <action content="Yes" arguments="${appProtocol}://?action=yes" activationType="protocol" />
+    <action content="No" arguments="${appProtocol}://?action=no" activationType="protocol" />
+  </actions>
+</toast>
