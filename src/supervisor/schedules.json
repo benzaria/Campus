@@ -3,12 +3,12 @@
     {
       "title": "Meeting Reminder 1",
       "body": "Team meeting NOW",
-      "notified": true
+      "notified": false
     },
     {
       "title": "Meeting Reminder 2",
       "body": "Team meeting NOW",
-      "notified": true
+      "notified": false
     }
   ],
   "00|10|03|12": [
@@ -22,7 +22,7 @@
     {
       "title": "Meeting Reminder 3",
       "body": "Team meeting NOW",
-      "notified": false
+      "notified": true
     }
   ]
 }

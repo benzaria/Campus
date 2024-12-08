@@ -1,6 +1,6 @@
 {
     "YesNo": [
-        "<toast launch='${appProtocol}://?action=click' activationType='protocol'>",
+        "<toast launch='${__appProtocol}://?action=click' activationType='protocol'>",
         "  <visual>",
         "    <binding template='ToastGeneric'>",
         "      <text>Would you like to proceed?</text>",
@@ -8,35 +8,35 @@
         "    </binding>",
         "  </visual>",
         "  <actions>",
-        "    <action content='Yes' arguments='${appProtocol}://?action=yes' activationType='protocol' />",
-        "    <action content='No' arguments='${appProtocol}://?action=no' activationType='protocol' />",
+        "    <action content='Yes' arguments='${__appProtocol}://?action=yes' activationType='protocol' />",
+        "    <action content='No' arguments='${__appProtocol}://?action=no' activationType='protocol' />",
         "  </actions>",
         "</toast>"
     ],
     "AcceptDismiss": [
-        "<toast launch='${appProtocol}://?action=click' activationType='protocol'>",
+        "<toast launch='${__appProtocol}://?action=click&for=${__notifor}' activationType='protocol'>",
         "  <visual>",
         "    <binding template='ToastGeneric'>",
         "      <text>Return books to the library.</text>",
         "    </binding>",
         "  </visual>",
         "  <actions>",
-        "    <action content='Accept' arguments='${appProtocol}://?action=accept' activationType='protocol' imageUri='${dirname}/icon.png' />",
-        "    <action content='Dismiss' arguments='${appProtocol}://?action=dismiss' activationType='protocol' />",
+        "    <action content='Accept' arguments='${__appProtocol}://?action=accept&for=${__notifor}' activationType='protocol' imageUri='${__dirname}/icon.png' />",
+        "    <action content='Dismiss' arguments='${__appProtocol}://?action=dismiss&for=${__notifor}' activationType='protocol' />",
         "  </actions>",
         "</toast>"
     ],
     "AcceptSnoozeDismiss": [
-        "<toast launch='${appProtocol}://?action=click' activationType='protocol'>",
+        "<toast launch='${__appProtocol}://?action=click' activationType='protocol'>",
         "  <visual>",
         "    <binding template='ToastGeneric'>",
         "      <text>Return books to the library.</text>",
         "    </binding>",
         "  </visual>",
         "  <actions>",
-        "    <action content='Accept' arguments='${appProtocol}://?action=accept' activationType='protocol' imageUri='${dirname}/icon.png'/>",
-        "    <action content='Snooze' arguments='${appProtocol}://?action=snooze' activationType='protocol' />",
-        "    <action content='Dismiss' arguments='${appProtocol}://?action=dismiss' activationType='protocol' />",
+        "    <action content='Accept' arguments='${__appProtocol}://?action=accept' activationType='protocol' imageUri='${__dirname}/icon.png'/>",
+        "    <action content='Snooze' arguments='${__appProtocol}://?action=snooze' activationType='protocol' />",
+        "    <action content='Dismiss' arguments='${__appProtocol}://?action=dismiss' activationType='protocol' />",
         "  </actions>",
         "</toast>"
     ]

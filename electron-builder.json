@@ -1,6 +1,6 @@
 {
-    "appId": "com.benz.fmpqcm",
-    "productName": "Fmp QCM",
+    "appId": "com.benz.campus",
+    "productName": "Campus",
     "asar": true,
     "directories": {
         "output": "dist"

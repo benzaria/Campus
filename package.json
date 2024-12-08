@@ -15,7 +15,7 @@
     ],
     "homepage": "https://Campus.github.io",
     "scripts": {
-        "start:src": "electron ./src",
+        "start": "electron ./src",
         "test": "electron ./test",
         "api:mail": "node src/apis/mailer.js",
         "api:db": "node src/apis/database.js",
@@ -27,25 +27,24 @@
         "dist:All": "electron-builder -wml",
         "dev": "vite --config src/app/vite.config.js",
         "electron": "electron .",
-        "start": "concurrently \"npm run dev\" \"npm run electron\"",
+        "start:vite": "concurrently \"npm run dev\" \"npm run electron\"",
         "build": "vite build --config vite.config.js && vite build --config src/app/vite.config.js",
-        "sched": "electron ./src/supervisor/main.js"
-    },
-    "directories": {
-        "test": "./test"
+        "super": "electron ./src/supervisor/main.js"
     },
     "keywords": [],
     "dependencies": {
-        "@google-cloud/local-auth": "^3.0.1",
-        "dotenv": "^16.4.5",
-        "electron": "^33.2.0",
-        "electron-builder": "^25.1.8",
+        "dotenv": "^16.4.7",
         "google-auth-library": "^9.15.0",
         "googleapis": "^144.0.0",
         "jquery": "^3.7.1",
+        "marked": "^15.0.3",
         "node-cron": "^3.0.3",
-        "node-notifier": "^10.0.1",
-        "nodemailer": "^6.9.16",
-        "vite": "^6.0.1"
+        "nodemailer": "^6.9.16"
+    },
+    "devDependencies": {
+        "@google-cloud/local-auth": "^3.0.1",
+        "electron": "^33.2.1",
+        "electron-builder": "^25.1.8",
+        "vite": "^6.0.3"
     }
 }
