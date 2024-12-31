@@ -1,0 +1,181 @@
+@import 'dev.css';
+@import 'bulma.css';
+/* Electron */
+.is-dragable {
+  -webkit-app-region: drag;
+}
+
+.is-dragable * {
+  -webkit-app-region: no-drag;
+}
+
+/* bulma */
+.button.has-glow, .button.is-glowing:hover {
+  box-shadow: 1px 1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l)), -1px -1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+}
+
+.button.is-glowing:not(.is-hoverable):not(:hover) {
+  animation: alternate glowing 1s infinite;
+}
+@keyframes glowing {
+  from {
+    box-shadow: 1px 1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l)), -1px -1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+  }
+  to {
+    box-shadow: 0;
+  }
+}
+.button.is-outlined.fill-outline:not(.is-hovered):not(.is-active):hover {
+  background-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), calc(var(--bulma-button-color-l) + var(--bulma-button-background-l-delta)));
+}
+
+.button.is-outlined.fill-outline.is-hovered,
+.button.is-outlined.fill-outline.is-active {
+  background-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), calc(var(--bulma-button-color-l) + var(--bulma-button-background-l-delta)));
+}
+
+.navbar-item:hover > .navbar-item {
+  --bulma-navbar-item-background-l-delta: var(--bulma-navbar-item-hover-background-l-delta);
+  --bulma-navbar-item-background-a: 1;
+}
+
+.navbar-item.is-clickable:active {
+  --bulma-navbar-item-background-l-delta: var(--bulma-navbar-item-active-background-l-delta);
+  --bulma-navbar-item-background-a: 1;
+}
+
+.navbar-item {
+  -moz-column-gap: 0.2rem;
+       column-gap: 0.2rem;
+}
+
+.is-fullheight {
+  height: 100vh;
+}
+
+.is-fullwidth {
+  width: 100%;
+}
+
+.breadcrumb.has-angle-separator li + li::before {
+  content: ">";
+}
+
+/* root */
+*.is-barless::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+*::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--bulma-info-dark);
+  /* Background of the track */
+  border-radius: 10px;
+  /* Rounded track edges */
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--bulma-info-light);
+  /* Scrollbar color */
+  border-radius: 10px;
+  /* Rounded scrollbar edges */
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--bulma-info-50);
+  /* Color on hover */
+}
+
+/* styles */
+resizer {
+  z-index: 50;
+}
+resizer::before {
+  width: 5px;
+  height: 100%;
+  display: block;
+  content: "";
+  cursor: ew-resize;
+  position: absolute;
+  border-inline: 2px solid transparent;
+  background-clip: padding-box;
+  transform: translateX(-50%);
+  transition: all 100ms ease 0.2s;
+}
+resizer:hover::before, resizer:active::before {
+  width: 6px;
+  background-color: var(--bulma-info-50);
+}
+
+.sidebar-left-list {
+  z-index: 2;
+}
+.sidebar-left-list > li {
+  border-radius: 20%;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.sidebar-left-list > li:hover, .sidebar-left-list > li.is-active {
+  background: var(--bulma-info-15);
+}
+.sidebar-left-list > li:active {
+  background: var(--bulma-info-20);
+  transition: background 0.1s ease-in-out;
+}
+.sidebar-left-list > li i {
+  font-size: 22.5px;
+}
+
+/* old styles */
+.dropdown-menu.dropright {
+  right: 0;
+  left: auto;
+  top: -6px;
+  transform: translateX(100%);
+}
+
+.dropdown-menu.dropright .dropdown-content {
+  width: 100px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 3px;
+}
+
+.dropdown-menu.dropright .navbar-item {
+  justify-content: center;
+  padding-right: 16px;
+  /* width: 100px; */
+}
+
+.load-wraper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: var(--bulma-grey);
+  /* background-color: rgb(211,211,211); */
+  /* z-index: 44; */
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.activity {
+  position: absolute;
+  /* left: -45%; */
+  height: 100%;
+  width: 45%;
+  /* background-image: linear-gradient(to left, var(--holder-1), var(--holder-2), var(--holder-3), var(--holder-2), var(--holder-1)); */
+  background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(251, 251, 251, 0.048), rgba(251, 251, 251, 0.137), rgba(251, 251, 251, 0.048), rgba(0, 0, 0, 0));
+  animation: loading 1s infinite;
+  /* z-index: 45; */
+}
+@keyframes loading {
+  0% {
+    left: -45%;
+  }
+  100% {
+    left: 100%;
+  }
+}

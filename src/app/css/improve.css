@@ -1,0 +1,62 @@
+/* Electron */
+.is-dragable {
+  -webkit-app-region: drag;
+}
+
+.is-dragable * {
+  -webkit-app-region: no-drag;
+}
+
+/* bulma */
+.button.has-glow, .button.is-glowing:hover {
+  box-shadow: 1px 1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l)), -1px -1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+}
+
+.button.is-glowing:not(.is-hoverable):not(:hover) {
+  animation: alternate glowing 1s infinite;
+}
+@keyframes glowing {
+  from {
+    box-shadow: 1px 1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l)), -1px -1px 5px hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+  }
+  to {
+    box-shadow: 0;
+  }
+}
+.button.is-outlined.fill-outline:not(.is-hovered):not(.is-active):hover {
+  background-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), calc(var(--bulma-button-color-l) + var(--bulma-button-background-l-delta)));
+}
+
+.button.is-outlined.fill-outline.is-hovered,
+.button.is-outlined.fill-outline.is-active {
+  background-color: hsl(var(--bulma-button-h), var(--bulma-button-s), var(--bulma-button-l));
+  color: hsl(var(--bulma-button-h), var(--bulma-button-s), calc(var(--bulma-button-color-l) + var(--bulma-button-background-l-delta)));
+}
+
+.navbar-item:hover > .navbar-item {
+  --bulma-navbar-item-background-l-delta: var(--bulma-navbar-item-hover-background-l-delta);
+  --bulma-navbar-item-background-a: 1;
+}
+
+.navbar-item.is-clickable:active {
+  --bulma-navbar-item-background-l-delta: var(--bulma-navbar-item-active-background-l-delta);
+  --bulma-navbar-item-background-a: 1;
+}
+
+.navbar-item {
+  -moz-column-gap: 0.2rem;
+       column-gap: 0.2rem;
+}
+
+.is-fullheight {
+  height: 100vh;
+}
+
+.is-fullwidth {
+  width: 100%;
+}
+
+.breadcrumb.has-angle-separator li + li::before {
+  content: ">";
+}

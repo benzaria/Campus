@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Markdown Preview</title>
+    <style>
+        .markdown-editor {
+            border: 1px solid #ddd;
+            padding: 10px;
+            min-height: 200px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            overflow-y: auto;
+        }
+
+        .markdown-editor:empty::before {
+            content: "Start typing...";
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="editor" class="markdown-editor" contenteditable="true"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+    <script>
+        const editor = document.getElementById('editor');
+
+        // Update Markdown live while typing
+        editor.addEventListener('input', () => {
+            const rawText = editor.innerText;
+
+            // Parse Markdown to HTML
+            const parsedHTML = marked(rawText);
+
+            // Sanitize HTML for security
+            const safeHTML = DOMPurify.sanitize(parsedHTML);
+
+            // Replace the content with the parsed HTML
+            editor.innerHTML = safeHTML;
+
+            // Restore caret position
+            placeCaretAtEnd(editor);
+        });
+
+        // Function to restore caret position
+        function placeCaretAtEnd(el) {
+            el.focus();
+            const range = document.createRange();
+            range.selectNodeContents(el);
+            range.collapse(false);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+
+    </script>
+</body>
+
+</html>

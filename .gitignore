@@ -6,6 +6,7 @@ dist/
 .backup/
 web-page/
 deprecated/
+.history/
 
 # files
 *.old
@@ -18,3 +19,4 @@ credentials.json
 tokens.json
 .env
 *.txt
+version.json

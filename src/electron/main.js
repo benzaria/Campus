@@ -1,9 +1,8 @@
-import { app, BrowserWindow as Window, WebContentsView as View } from "electron/main";
+import { app, BrowserWindow as Window, WebContentsView as View } from "electron";
 import { showNotification, setupTray, handleProtocolUrl } from "../supervisor/supervisor.js"
 import { config as denv } from "dotenv"; denv();
 import path from "node:path";
 import fs from "node:fs";
-import $ from "jquery";
 
 
 /** @type {Protocol} */ export const __appProtocol = 'myapp';
@@ -11,13 +10,12 @@ import $ from "jquery";
 global.win = null;
 global.app = app;
 
+console.log(__dirname)
 
 // Ensure only a single instance of the app is running
 const gotLock = app.requestSingleInstanceLock();
 
-if (!gotLock) {
-    app.quit();
-} else {
+!gotLock ? app.quit() : (() => {
     if (app.isPackaged) {
         app.setAsDefaultProtocolClient(__appProtocol);
     } else {
@@ -29,24 +27,17 @@ if (!gotLock) {
     app.on('second-instance', (evt, argv) => {
         const url = argv.find(arg => arg.startsWith(`${__appProtocol}://`));
         url ? handleProtocolUrl(url) : null;
-
-        //* Restore or recreate the window
-        if (!global.win) {
-            global.win = createWindow();
-        } else if (global.win.isMinimized()) {
-            global.win.restore();
-        }
-        global.win.show(); //*/
+        windowExist();
     });
 
-    app.on('ready', () => {
+    app.whenReady().then(() => {
         console.log('App is ready');
 
         // Check if the app was started with --supervisor
         const isSupervisor = process.argv.includes('--supervisor');
         if (!isSupervisor) {
             console.log('not supervised')
-            global.win = createWindow();
+            windowExist();
         }
         setupTray();
 
@@ -54,7 +45,7 @@ if (!gotLock) {
         url ? handleProtocolUrl(url) : null;
 
         // test
-        showNotification();
+        //showNotification();
     });
 
     app.on('open-url', (evt, url) => {
@@ -63,17 +54,14 @@ if (!gotLock) {
     });
 
     app.on('activate', () => {
-        if (!global.win) {
-            global.win = createWindow();
-        }
-        global.win.show();
+        windowExist()
     });
 
     // Quit the app only when explicitly requested
     app.on('window-all-closed', (evt) => {
         evt.preventDefault(); // Prevent quitting when all windows are closed
     });
-}
+})();
 
 export function createWindow() {
     global.win = new Window({
@@ -84,34 +72,44 @@ export function createWindow() {
         titleBarStyle: 'hidden',
         titleBarOverlay: {
             symbolColor: '#74b1be',
-            color: '#2f3241',
-            height: 55,
+            // color: '#2f3241',
+            color: '#ffff',
+            height: 34,
             ////width: 120,
         },
         webPreferences: {
             //devTools: false,
+            sandbox: false,
             nodeIntegration: false,
             contextIsolation: true,
-            enableRemoteModule: false,
-            sandbox: true,
+            enableRemoteModule: true,
             preload: path.join(__dirname, 'preload.cjs')
         }
     });
 
     global.win.webContents.setUserAgent(process.env.userAgent);
 
-    const hiddenContent = new View();
-    hiddenContent.webContents.setUserAgent(process.env.userAgent);
-    hiddenContent.setBounds({ x: 0, y: 0, width: 400, height: 600 });
-    hiddenContent.webContents.loadURL('https://google.com/');
+    // example
+    // const hiddenContent = new View();
+    // hiddenContent.webContents.setUserAgent(process.env.userAgent);
+    // hiddenContent.setBounds({ x: 100, y: 0, width: 800, height: 600 });
+    // hiddenContent.webContents.loadURL('C:\\Users\\benz\\Desktop\\Médecine_Calendrier des examens du 2ème partiel_1ère session  2023-2024.pdf');
 
     //win.setContentView()
-    global.win.loadURL('https://google.com/').catch(console.error);
-    global.win.contentView.addChildView(hiddenContent)
+    // global.win.loadFile('./app/index.html').catch(console.error);
+    // global.win.loadURL('https://localhost:3000').catch(console.error);
+    // global.win.contentView.addChildView(hiddenContent)
+
+    global.win.loadURL('http://localhost:3000');
+    //global.win.loadFile(path.join(__dirname, '../../dist/app/index.html'));
 
     global.win.on('close', () => {
         global.win = null;
     });
 
     return global.win;
+}
+
+function windowExist() {
+    !global.win ? global.win = createWindow() : global.win.show();
 }

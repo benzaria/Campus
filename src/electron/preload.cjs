@@ -1,21 +1,32 @@
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, webFrame } = require('electron');
+const path = require('path');
 
 const api = {
     decode: async (data) => {
         console.log('in preload', data);
         return await ipcRenderer.invoke('decode-file', data);
     },
+
     encode: async (data) => {
         console.log('in preload', data);
         return await ipcRenderer.invoke('encode-file', data);
     },
-    
+
     mail: (data) => ipcRenderer.send('mail', data),
     storage: (verb, data) => ipcRenderer.invoke('storage', verb, data),
     database: (verb, data) => ipcRenderer.invoke('database', verb, data),
+
+    webFrame: {
+        setZoomLevel: (level) => webFrame.setZoomLevel(level),
+        getZoomLevel: () => webFrame.getZoomLevel(),
+        setZoomFactor: (factor) => webFrame.setZoomFactor(factor),
+        getZoomFactor: () => webFrame.getZoomFactor(),
+    },
 };
 
 contextBridge.exposeInMainWorld('api', api);
+contextBridge.exposeInMainWorld('root', path.join(__dirname, '../..'));
+contextBridge.exposeInMainWorld('require', (module) => require(module));
 
 /*
 contextBridge.exposeInMainWorld('electron', {
