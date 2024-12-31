@@ -1,0 +1,160 @@
+// 
+
+:root {
+    // transform: none;
+    // zoom: 1;
+    // font-size: 0.9128em;
+    /* --sidebar-left-width: 200px;*/
+    --titlebar-height: 36px;
+    --dom-height: 100%;
+}
+
+
+dom {
+    height: var(--dom-height);
+}
+
+.titlebar {
+    height: var(--titlebar-height);
+    border-bottom: 1px solid var(--bulma-info-20);
+
+    >:first-child {
+        padding-inline: 12px;
+        color: var(--bulma-info-80);
+    }
+
+    >:nth-child(2) {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        >div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--bulma-info-40);
+            border-radius: 5px;
+            width: 40%;
+            height: 25px;
+            background-color: var(--bulma-info-20);
+
+            >span.icon-text {
+                flex-wrap: nowrap;
+                gap: 0;
+            }
+
+            i {
+                font-size: 14px;
+            }
+        }
+    }
+
+    >:last-child() {}
+}
+
+.sidebar-left {}
+
+.sidebar-right-content {
+    width: 200px;
+}
+
+.sidebar-left-content {
+    border-right: 1px solid var(--bulma-info-15);
+    background: var(--bulma-sheme-main);
+    width: var(--sidebar-left-width);
+    min-width: 200px;
+    max-width: 400px;
+    z-index: 1;
+
+    >#module {
+        // background: var(--bulma-sheme-main);
+    }
+
+
+    &:not(.is-pinned) {
+        position: absolute;
+        margin-left: 3rem;
+
+        /* !? */
+        +resizer {
+            display: none;
+        }
+    }
+
+    .tree-menu {
+        .tree-label {}
+
+        .tree-list {
+            li {
+                &:has(>a):not(:last-child) {
+                    margin-bottom: 4px;
+                }
+
+                >ul {
+                    padding-left: 0.5rem;
+                    margin-block: 0.25rem;
+                    margin-right: 0;
+                }
+
+                >a {
+                    padding-block: 0.25rem;
+
+                    &.is-folder {
+                        padding-left: 0.5px;
+
+                        span.icon-text {
+                            gap: 0;
+                        }
+                    }
+
+                    &.is-file {}
+
+                    &.is-active-1 {
+                        color: var(--bulma-light);
+                        background-color: var(--bulma-info-20);
+                    }
+
+                    &.is-active-2 {
+                        color: var(--bulma-light);
+                        background-color: var(--bulma-info-30);
+                    }
+
+                    &.is-active-3 {
+                        color: var(--bulma-light);
+                        background-color: var(--bulma-info-40);
+                    }
+
+                    &.is-active-4 {
+                        color: var(--bulma-light);
+                        background-color: var(--bulma-info-50);
+                    }
+
+                    &.is-active-5 {
+                        color: var(--bulma-light);
+                        background-color: var(--bulma-info-60);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.main-content {
+    >:first-child {
+        li.is-active {
+            a {
+                color: var(--bulma-info-50);
+            }
+        }
+
+        a {
+            padding: .25rem .5rem;
+        }
+    }
+
+    >:last-child {
+        height: 100%;
+    }
+}

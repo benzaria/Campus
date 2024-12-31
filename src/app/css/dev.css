@@ -1,0 +1,108 @@
+:root {
+  /* --sidebar-left-width: 200px;*/
+  --titlebar-height: 36px;
+  --dom-height: 100%;
+}
+
+dom {
+  height: var(--dom-height);
+}
+
+.titlebar {
+  height: var(--titlebar-height);
+  border-bottom: 1px solid var(--bulma-info-20);
+}
+.titlebar > :first-child {
+  padding-inline: 12px;
+  color: var(--bulma-info-80);
+}
+.titlebar > :nth-child(2) {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.titlebar > :nth-child(2) > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bulma-info-40);
+  border-radius: 5px;
+  width: 40%;
+  height: 25px;
+  background-color: var(--bulma-info-20);
+}
+.titlebar > :nth-child(2) > div > span.icon-text {
+  flex-wrap: nowrap;
+  gap: 0;
+}
+.titlebar > :nth-child(2) > div i {
+  font-size: 14px;
+}
+.sidebar-right-content {
+  width: 200px;
+}
+
+.sidebar-left-content {
+  border-right: 1px solid var(--bulma-info-15);
+  background: var(--bulma-sheme-main);
+  width: var(--sidebar-left-width);
+  min-width: 200px;
+  max-width: 400px;
+  z-index: 1;
+}
+.sidebar-left-content:not(.is-pinned) {
+  position: absolute;
+  margin-left: 3rem;
+  /* !? */
+}
+.sidebar-left-content:not(.is-pinned) + resizer {
+  display: none;
+}
+.sidebar-left-content .tree-menu .tree-list li:has(> a):not(:last-child) {
+  margin-bottom: 4px;
+}
+.sidebar-left-content .tree-menu .tree-list li > ul {
+  padding-left: 0.5rem;
+  margin-block: 0.25rem;
+  margin-right: 0;
+}
+.sidebar-left-content .tree-menu .tree-list li > a {
+  padding-block: 0.25rem;
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-folder {
+  padding-left: 0.5px;
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-folder span.icon-text {
+  gap: 0;
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-active-1 {
+  color: var(--bulma-light);
+  background-color: var(--bulma-info-20);
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-active-2 {
+  color: var(--bulma-light);
+  background-color: var(--bulma-info-30);
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-active-3 {
+  color: var(--bulma-light);
+  background-color: var(--bulma-info-40);
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-active-4 {
+  color: var(--bulma-light);
+  background-color: var(--bulma-info-50);
+}
+.sidebar-left-content .tree-menu .tree-list li > a.is-active-5 {
+  color: var(--bulma-light);
+  background-color: var(--bulma-info-60);
+}
+
+.main-content > :first-child li.is-active a {
+  color: var(--bulma-info-50);
+}
+.main-content > :first-child a {
+  padding: 0.25rem 0.5rem;
+}
+.main-content > :last-child {
+  height: 100%;
+}

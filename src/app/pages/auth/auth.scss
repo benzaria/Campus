@@ -1,0 +1,50 @@
+/* singin {
+    width: 400px;
+    padding-bottom: 100px;
+}
+
+singin button {
+    align-self: right;
+} */
+
+
+span.is-passeye {
+    transform: translateX(-40px);
+}
+
+auth {
+    width: 400px;
+
+    .box {
+        box-shadow: 0 0 3px var(--bulma-info-dark);
+    }
+
+    .caption {
+        position: fixed;
+        margin-top: 20px;
+        width: 370px;
+        // transform: translateY(20px);
+    }
+
+    .campus-link {}
+}
+
+[data-theme=light] {
+    // .caption {
+    //     color: hsl(var(--bulma-info-h), var(--bulma-info-s), var(--bulma-info-dark-l));
+    // }
+
+    auth.box {
+        box-shadow: 0 3px 30px 10px var(--bulma-info-light);
+    }
+}
+
+[data-theme=dark] {
+    // .caption {
+    //     color: hsl(var(--bulma-info-h), var(--bulma-info-s), var(--bulma-info-light-l));
+    // }
+
+    auth.box {
+        box-shadow: 0 3px 30px 10px var(--bulma-info-dark);
+    }
+}

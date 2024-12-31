@@ -1,9 +1,14 @@
 {
-    "appId": "com.benz.fmpqcm",
-    "productName": "Fmp QCM",
+    "appId": "com.benz.campus",
+    "productName": "Campus",
     "asar": true,
     "directories": {
-        "output": "dist"
+        "output": "dist/campus"
+    },
+    "publish": {
+        "provider": "github",
+        "owner": "benzaria",
+        "repo": "Campus"
     },
     "files": [
         "./node_modules/**/*",
@@ -40,6 +45,12 @@
         "target": [
             {
                 "target": "dir",
+                "arch": [
+                    "x64"
+                ]
+            },
+            {
+                "target": "nsis",
                 "arch": [
                     "x64"
                 ]

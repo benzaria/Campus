@@ -1,101 +1,92 @@
-/** Global Imported Scripts
- * import $ from "../electron/jquery.js";
- * import from "./pages/*"
- */
+import $ from 'jquery';
+import './utils/startup.js';
+import './dev/dev.js';
 
-import $ from "jquery";
-
-$('d')
-
-export const api = window.api;
-export const frame = $('main#main-container');
+const fs = window.require('fs')
+const path = window.require('path')
 
 
-/**
- * @param {String} title 
- */
-const loadPage = (title) => {
-    switch (title.toLowerCase()) {
-        case 'modules':
-            frame.load('./pages/module/module.html');
-            loadScript('./pages/module/module.js');
-            break;
-        case 'tests':
-            frame.load('./pages/test/test.html');
-            loadScript('./pages/test/test.js');
-            break;
-        case 'download':
-            frame.load('./pages/download/download.html');
-            loadScript('./pages/download/download.js');
-            break;
-        case 'about':
-            frame.load('./pages/about/about.html');
-            loadScript('./pages/about/about.js');
-            break;
-        default:
-            frame.load('./pages/home/home.html')
-            loadScript('./pages/home/home.js');
-            break;
-    }
-};    
+const tree = JSON.parse(fs.readFileSync(path.join(window.root, 'assets/tree.json'), 'utf-8'))
 
-/**
- * @param {String} src 
- */
-const loadScript = (src) => {
-    console.log(src);
-    
-    /* Remove any existing dynamically added scripts
-    const pagejs = document.getElementById('pagejs').remove()
+const icons = {
+    folder: 'folder',
+    file: 'file',
+    pdf: 'file-pdf',
+    txt: 'file-text',
+    word: 'file-word',
+    image: 'file-image',
+    video: 'file-video',
+    audio: 'file-audio',
+    powerpoint: 'file-powerpoint',
 
-    // Create a new script element
-    const script = document.createElement('script');
-    script.src = src;
-    script.type = 'module';
-    script.id = 'pagejs'
-    script.onload = () => console.log(`Script ${src} loaded successfully`);
-    script.onerror = () => console.error(`Failed to load script ${src}`);
-
-    // Append the new script to the document
-    document.body.appendChild(script);*/
-};
-
-window.onload = () => {
-    const nav = document.querySelector('div.nav')
-    const tit = document.querySelector('div.tit')
-    const lab = nav.querySelector('div.lab')
-    const ul = nav.querySelector('ul')
-    const li = ul.querySelectorAll('li')
-    const ig = lab.querySelector('img')
-    const lb = lab.querySelector('label')
-
-    li.forEach(li => {
-        li.addEventListener('click', () => {
-            ul.style.display = 'none'
-            lb.style.display = 'none'
-            setTimeout(() => {
-                ul.removeAttribute('style')
-                lb.removeAttribute('style')
-            })
-            
-            loadPage(tit.innerText = li.innerText)
-        })
-    });
-    loadPage('tests');
 }
 
-    
-    /*document.addEventListener('click', () => {
-        (!lab.contains(event.target)) ?
-        setTimeout(() => {
-            ul.removeAttribute('style')
-            lb.removeAttribute('style')
-            ig.removeAttribute('style')
-        }) : null
-    })*/
+export const $root = $(document.documentElement)
+export const $DOM = $(document)
 
-    /*lab.addEventListener('click', () => {
-        ul.style.display = 'flex'
-        lb.style.display = 'block'
-        ig.style.animation = 'img 0.5s'
-    })*/
+$(function () {
+
+    generate('module', tree)
+
+});
+
+
+
+function toggleBurger() {
+    $('.navbar-burger').toggleClass('is-active');
+    $('.navbar-menu').toggleClass('is-active');
+}
+
+function togglePasseye() {
+    $('span.is-passeye i').toggleClass('fa-eye')
+    const $input = $('span.is-passeye').siblings('input');
+    $input.attr('type', $input.attr('type') === 'text' ? 'password' : 'text');
+}
+
+
+async function generate(sidebar = 'module', tree) {
+    if (sidebar === 'module') {
+        const $sidebar = $('div#module')
+        const $tree = $('<ul class="tree-menu menu px-2 my-2 has-text-light-dark">')
+        const $p = $('<p class="tree-label menu-label my-2 has-text-light-dark">').text('module')
+        const $ul = $('<ul class="tree-list menu-list">')
+        $ul.append($p, await renderTree(tree))
+        $tree.append($ul)
+        $sidebar.append($tree)
+    }
+}
+
+async function renderTree(tree) {
+    const $tree = $('<ul>')
+
+    for (const key in tree) {
+        const { _id, _type, _files } = tree[key]
+        const icon = icons[_type] ? icons[_type] : icons['file']
+        const $li = $('<li>')
+        const $a = $('<a>').addClass(`is-${icon.split('-')[0]}`).data('_id', _id) //.attr('id', _id)
+        const $span = $('<span>').addClass('icon-text')
+        const $icon_pri = $('<span>').addClass('icon').append(`<i class="fas fa-${icon} ${icon === 'folder' ? 'pr-1' : null}"></i>`)
+
+        if (icon === 'folder') {
+            const $icon_sec = $('<span>').addClass('icon').append(`<i class="fas fa-angle-right"></i>`)
+            $span.append($icon_sec)
+        }
+
+        $span.append($icon_pri, key)
+        $a.append($span)
+
+        $a.on('click', () => {
+            $a.toggleClass('is-active-1')
+            $a
+                .find(`i.fa-angle-right`).toggleClass('fa-angle-down').end()
+                .find(`i.fa-folder`).toggleClass('fa-folder-open');
+            $li.children('ul').toggle()
+        })
+
+        $li.append($a, icon === 'folder' ? await renderTree(_files) : null)
+        $li.children('ul').toggle()
+        $tree.append($li)
+    }
+
+    return $tree;
+}

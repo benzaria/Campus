@@ -1,0 +1,12 @@
+<toast launch='${appProtocol}://?action=click' activationType='protocol'>
+  <visual>
+    <binding template='ToastGeneric'>
+      <text>Return books to the library.</text>
+    </binding>
+  </visual>
+  <actions>
+    <action content='Accept' arguments='${appProtocol}://?action=accept' activationType='protocol' imageUri='${__dirname}/icon.png' />
+    <action content='Snooze' arguments='${appProtocol}://?action=snooze' activationType='protocol' />
+    <action content='Dismiss' arguments='${appProtocol}://?action=dismiss' activationType='protocol' />
+  </actions>
+</toast>

@@ -1,0 +1,28 @@
+{
+  "10|23|*|*": [
+    {
+      "title": "Meeting Reminder 1",
+      "body": "Team meeting NOW",
+      "notified": false
+    },
+    {
+      "title": "Meeting Reminder 2",
+      "body": "Team meeting NOW",
+      "notified": false
+    }
+  ],
+  "00|10|03|12": [
+    {
+      "title": "Meeting Reminder 3",
+      "body": "Team meeting NOW",
+      "notified": false
+    }
+  ],
+  "00|08|03|12": [
+    {
+      "title": "Meeting Reminder 3",
+      "body": "Team meeting NOW",
+      "notified": true
+    }
+  ]
+}
