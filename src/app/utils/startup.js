@@ -1,12 +1,11 @@
 import $ from 'jquery';
+import { $DOM, $root } from './global';
 
-const $root = $(document.documentElement)
-const $DOM = $(document)
 
 $(function () {
     resizer();
     keyZoom();
-})
+});
 
 
 function resizer() {

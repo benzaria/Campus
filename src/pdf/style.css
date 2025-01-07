@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #toolbar {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #toolbar button {
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    transition: background-color 0.3s;
+  }
+  
+  #toolbar button:hover {
+    background-color: #eee;
+  }
+  
+  #pdf-container {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+  }
+  
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  

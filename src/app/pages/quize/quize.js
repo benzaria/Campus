@@ -1,6 +1,6 @@
 import { createForms, crct, getAnswer, nav_visible } from "./utils.js";
 import { api, frame } from "../../script.js";
- 
+
 
 let min = 1;
 let max = 50;
@@ -12,18 +12,18 @@ export let answer = Array.from({ length: max }, () => Array());
 
 frame[0].onload = async () => {
     console.log('in test');
-    
+
     json_data = await api.decode({ key: ' ', iv: '', file: 'form.b64' })
     //json_data = await decode(' ', '', '../../../../data/form.b64');
     console.log(json_data);
-    
+
     const frameContent = frame[0]
     console.log(frameContent);
 
     //const next = frameContent.getElementById("next");
     const next = frameContent.$('#next')[0];
     console.log(next);
-    
+
     next.addEventListener('click', async () => {
         if (next.style.visibility != 'hidden') {
             frameContent.querySelectorAll('form').forEach((form) => {

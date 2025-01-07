@@ -1,6 +1,6 @@
 :root {
     /*-webkit-app-region: drag; /* Allows the bar to be draggable */
-    --btn-color:rgb(0, 132, 255);
+    --btn-color: rgb(0, 132, 255);
     --btn-color-hover: hsl(209, 100%, 43%);
     --scroll-color: var(--btn-color);
     --scroll-color-hover: hsl(209, 100%, 70%);
@@ -45,7 +45,8 @@ html::-webkit-scrollbar-thumb:active {
     display: inline-flex;
 }
 
-.check:hover .check__box {
+.check:hover .check__box,
+.check__box:hover {
     border-color: var(--box-color-hover);
 }
 
@@ -62,10 +63,6 @@ html::-webkit-scrollbar-thumb:active {
     transition: background-color var(--animation-sec), border-color var(--animation-sec);
 }
 
-.check__box:hover {
-    border-color: var(--box-color-hover);
-}
-
 .check__box::after {
     margin-bottom: 2px;
     transform: scale(0);
@@ -74,12 +71,12 @@ html::-webkit-scrollbar-thumb:active {
     transition: transform var(--animation-sec);
 }
 
-.check__input:checked + .check__box {
+.check__input:checked+.check__box {
     border-color: var(--btn-color);
     background-color: var(--btn-color);
 }
 
-.check__input:checked + .check__box::after {
+.check__input:checked+.check__box::after {
     transform: scale(1);
 }
 
@@ -212,7 +209,7 @@ html::-webkit-scrollbar-thumb:active {
     transition: transform var(--animation-sec), background-color var(--animation-sec);
 }
 
-.disp:active  {
+.disp:active {
     scale: 0.95;
     color: rgb(213, 219, 255);
 }
@@ -228,7 +225,7 @@ html::-webkit-scrollbar-thumb:active {
     transition: transform var(--animation-sec);
 }
 
-.disp__radio:checked + .disp {
+.disp__radio:checked+.disp {
     background-color: var(--form-color-border);
 }
 
@@ -264,12 +261,10 @@ html::-webkit-scrollbar-thumb:active {
     flex-direction: column;
     justify-content: center;
     transform: translate(-50%, -50%);
-    background: linear-gradient(
-        to right bottom, 
-        var(--btn-color), 
-        rgb(64, 163, 255), 
-        var(--btn-color-hover)
-        );
+    background: linear-gradient(to right bottom,
+            var(--btn-color),
+            rgb(64, 163, 255),
+            var(--btn-color-hover));
     border: 2px dashed var(--btn-color-hover);
     /*background-color: var(--btn-color);
     box-shadow: 
@@ -334,6 +329,7 @@ html::-webkit-scrollbar-thumb:active {
     from {
         transform: translate(30px);
     }
+
     to {
         transform: translate(-15px, 5px);
     }
@@ -343,6 +339,7 @@ html::-webkit-scrollbar-thumb:active {
     from {
         transform: translate(-30px);
     }
+
     to {
         transform: translate(15px, -5px);
     }
@@ -352,6 +349,7 @@ html::-webkit-scrollbar-thumb:active {
     from {
         transform: rotateZ(0);
     }
+
     to {
         transform: rotateZ(-45deg);
     }

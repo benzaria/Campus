@@ -1,9 +1,0 @@
-{
-    "name": "campus",
-    "version": "1.0.0",
-    "author": "benzaria",
-    "description": "Campus",
-    "license": "CC BY-NC-ND 4.0",
-    "main": "./electron/main.js",
-    "type": "module"
-}

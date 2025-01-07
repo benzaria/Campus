@@ -1,5 +1,7 @@
 # dirs
 node_modules/
+/assets/
+/data/
 /test*
 dist/
 .vscode/
@@ -7,6 +9,7 @@ dist/
 web-page/
 deprecated/
 .history/
+css/
 
 # files
 *.old

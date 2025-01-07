@@ -1,32 +1,20 @@
 import $ from 'jquery';
-import './utils/startup.js';
-import './dev/dev.js';
-
-const fs = window.require('fs')
-const path = window.require('path')
+import { $DOM, $root, icons, fs, path } from "./utils/global";
+import './utils/startup';
+import './dev/dev';
 
 
-const tree = JSON.parse(fs.readFileSync(path.join(window.root, 'assets/tree.json'), 'utf-8'))
+// const fs = require('fs')
+// const path = require('path')
 
-const icons = {
-    folder: 'folder',
-    file: 'file',
-    pdf: 'file-pdf',
-    txt: 'file-text',
-    word: 'file-word',
-    image: 'file-image',
-    video: 'file-video',
-    audio: 'file-audio',
-    powerpoint: 'file-powerpoint',
+//await fs.init();
 
-}
 
-export const $root = $(document.documentElement)
-export const $DOM = $(document)
 
-$(function () {
+$(async function () {
+    const tree = await fs.read('data/tree.json')
 
-    generate('module', tree)
+    generate('module', tree).catch(console.error)
 
 });
 

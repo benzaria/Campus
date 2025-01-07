@@ -97,11 +97,20 @@ dom {
   background-color: var(--bulma-info-60);
 }
 
-.main-content > :first-child li.is-active a {
-  color: var(--bulma-info-50);
+.main-content > :first-child > ul {
+  border-bottom-color: var(--bulma-info-15);
 }
-.main-content > :first-child a {
+.main-content > :first-child > ul li.is-active a {
+  color: var(--bulma-info-80);
+  border-color: var(--bulma-info-15) !important;
+}
+.main-content > :first-child > ul a {
   padding: 0.25rem 0.5rem;
+}
+.main-content > :first-child > ul a:hover {
+  color: currentColor;
+  background-color: var(--bulma-info-20);
+  border-bottom-color: var(--bulma-info-15);
 }
 .main-content > :last-child {
   height: 100%;

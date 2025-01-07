@@ -25,7 +25,9 @@ const api = {
 };
 
 contextBridge.exposeInMainWorld('api', api);
-contextBridge.exposeInMainWorld('root', path.join(__dirname, '../..'));
+contextBridge.exposeInMainWorld('const', {
+    __dirname: path.join(__dirname, '../..'),
+});
 contextBridge.exposeInMainWorld('require', (module) => require(module));
 
 /*

@@ -1,11 +1,25 @@
 import $ from 'jquery';
+import axios from 'axios';
+import { __dirname, $DOM, $root, fs, path } from '../utils/global'
 
-const fs = window.require('fs')
-const path = window.require('path')
+const log = console.log;
 
-const log = console.log
+(async () => {
 
-const $DOM = $(document)
-const $root = $(document.documentElement)
+    async function test() {
+
+        log(await fs.delete())
+
+        const tree = await fs.read('data/form.json')
+
+        log('list', await fs.list())
+        log('read', tree)
+
+    }
+
+    test();
+
+
+})()
 
 

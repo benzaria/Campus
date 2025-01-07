@@ -7,7 +7,7 @@ import { json_data, answer, correct } from "./test.js";
  * @param {Number} max
  */
 export function createForms(min, max) {
-    const frameContent = frame.contentDocument || frame.contentWindow.document; 
+    const frameContent = frame.contentDocument || frame.contentWindow.document;
     const container = frameContent.getElementById('forms-container');
     frameContent.getElementById('disp').innerText = json_data[0];
     container.innerHTML = "";

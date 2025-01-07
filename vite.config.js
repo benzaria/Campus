@@ -2,25 +2,42 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
-    root: './src/app', // Define the root for the frontend
+    root: './src/app',
     base: './',
     build: {
-        outDir: '../../dist/app', // Output directory for the frontend build
-        emptyOutDir: true,       // Clean the output directory before building
+        outDir: '../../dist',
+        emptyOutDir: true,
         rollupOptions: {
             input: {
-                main: resolve(__dirname, 'src/app/index.html'), // Entry point
+                main: resolve(__dirname, 'src/app/index.html'),
             },
-        }
+            output: {
+                entryFileNames: 'script.js',
+                chunkFileNames: 'js/[name].js',
+                assetFileNames: (assetInfo) => {
+                    const extType = assetInfo.name.split('.').pop();
+                    switch (extType) {
+                        case 'css':
+                            return 'style.css'
+                        case 'json':
+                            return '[name].json'
+                        case 'woff2':
+                            return 'assets/font/[name].[ext]'
+
+                        default:
+                            return 'assets/[name].[ext]';
+                    }
+                },
+            },
+        },
     },
     resolve: {
         alias: {
-            // Aliases for cleaner imports
             '@': resolve(__dirname, './src/app'),
         },
     },
     server: {
-        port: 3000, // Dev server port
-        strictPort: true, // Fails if port is already in use
+        port: 3000,
+        strictPort: true,
     },
 });

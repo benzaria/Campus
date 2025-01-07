@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PDF.js Basic Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+
+<body>
+    <canvas id="pdf-render"></canvas>
+
+    <script>
+        const url = './ModulesTracker.data'; // Replace with your PDF file's URL
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+        // Load PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        // Load PDF document
+        pdfjsLib.getDocument(url).promise.then((pdfDoc) => {
+            console.log('PDF loaded');
+            pdfDoc.getPage(1).then((page) => {
+                console.log('Page loaded');
+
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.getElementById('pdf-render');
+                const ctx = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                // Render PDF page
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport,
+                };
+                page.render(renderContext);
+            });
+        });
+    </script>
+</body>
+
+</html>
