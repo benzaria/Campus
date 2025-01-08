@@ -22,4 +22,4 @@ tokens.json
 .env
 *.txt
 version.json
-build.js
+*build*.*
