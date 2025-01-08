@@ -2,9 +2,9 @@
     "name": "campus",
     "version": "1.0.0",
     "author": "benzaria",
-    "description": "Campus",
+    "description": "Med-Campus",
     "license": "CC BY-NC-ND 4.0",
-    "main": "./electron/main.js",
+    "main": "./app/index.html",
     "type": "module",
     "maintainers": [
         {
@@ -15,8 +15,8 @@
     ],
     "homepage": "https://Med-Campus.github.io",
     "scripts": {
-        "start": "vite --host",
-        "start:dist": "py -m http.server 3000",
+        "host": "vite --host",
+        "server": "py -m http.server 3000",
         "build": "vite build -- dist",
         "publish": "vite build -- docs",
         "api:mail": "node src/apis/mailer.js",

@@ -21,6 +21,7 @@ if (fs.existsSync(srcDataDir))
 
 export default defineConfig({
     root: srcDir,
+    base: './',
     build: {
         outDir: distDir,
         emptyOutDir: false,
