@@ -1,6 +1,6 @@
 @import 'dev.css';
 @import 'bulma.css';
-@import '../assets/font/css/all.css';
+@import '../font/css/all.css';
 /* Electron */
 .is-dragable {
   -webkit-app-region: drag;

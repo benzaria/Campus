@@ -4,13 +4,6 @@ import './utils/startup';
 import './dev/dev';
 
 
-// const fs = require('fs')
-// const path = require('path')
-
-//await fs.init();
-
-
-
 $(async function () {
     const tree = await fs.read('data/tree.json')
 

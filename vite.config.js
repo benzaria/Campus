@@ -1,15 +1,29 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import path from 'path';
+import fs from 'fs'
+
+const option = { recursive: true, force: true }
+
+// Directories and paths
+const distDir = path.resolve('dist');
+const srcDir = path.resolve('src', 'app')
+const destDataDir = path.join(distDir, 'data');
+const srcDataDir = path.resolve(srcDir, 'data');
+
+if (fs.existsSync(distDir))
+    fs.rmSync(distDir, option)
+
+if (fs.existsSync(srcDataDir))
+    fs.cpSync(srcDataDir, destDataDir, option)
 
 export default defineConfig({
-    root: './src/app',
-    base: './',
+    root: srcDir,
     build: {
-        outDir: '../../dist',
-        emptyOutDir: true,
+        outDir: distDir,
+        emptyOutDir: false,
         rollupOptions: {
             input: {
-                main: resolve(__dirname, 'src/app/index.html'),
+                main: path.resolve(srcDir, 'index.html'),
             },
             output: {
                 entryFileNames: 'script.js',
@@ -33,7 +47,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@': resolve(__dirname, './src/app'),
+            '@': srcDir
         },
     },
     server: {

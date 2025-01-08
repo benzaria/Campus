@@ -6,7 +6,7 @@
     // font-size: 0.9128em;
     /* --sidebar-left-width: 200px;*/
     --titlebar-height: 36px;
-    --dom-height: 100%;
+    --dom-height: calc(100vh - var(--titlebar-height));
 }
 
 
@@ -66,6 +66,7 @@ dom {
     min-width: 200px;
     max-width: 400px;
     z-index: 1;
+
 
     >#module {
         // background: var(--bulma-sheme-main);

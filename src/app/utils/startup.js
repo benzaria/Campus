@@ -4,7 +4,7 @@ import { $DOM, $root } from './global';
 
 $(function () {
     resizer();
-    keyZoom();
+    // deprecated keyZoom();
 });
 
 

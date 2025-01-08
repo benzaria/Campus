@@ -1,7 +1,29 @@
 import $ from 'jquery';
 import axios from 'axios';
 
-/* Const */
+/* Constants */
+
+export const constant = {
+  $root: $(document.documentElement),
+  $DOM: $(document),
+  __protocol: globalThis.location.protocol,
+  __host: globalThis.location.host,
+  __base: globalThis.location.origin,
+  __dirname: globalThis.location.href,
+  oldDate: new Date().getTime() + 1000 * 60 * 60 * 24 * 30 * 1,
+  icons: {
+    folder: 'folder',
+    file: 'file',
+    pdf: 'file-pdf',
+    txt: 'file-text',
+    word: 'file-word',
+    excel: 'file-excel',
+    image: 'file-image',
+    video: 'file-video',
+    audio: 'file-audio',
+    powerpoint: 'file-powerpoint',
+  }
+}
 
 export const $root = $(document.documentElement)
 export const $DOM = $(document)
@@ -25,15 +47,25 @@ export const icons = {
   powerpoint: 'file-powerpoint',
 }
 
-/* Function */
+export const oldDate = new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 1
+
+/* Classes */
 
 export class path {
+  /**
+   * @param {...String} segments
+   * @returns {String}
+   */
   static join(...segments) {
     return segments.map(segment => segment.replace(/\/+$/, ''))
       .join('/')
       .replace(/\/{2,}/g, '/');
   }
 
+  /**
+   * @param {...String} segments
+   * @returns {String}
+   */
   static resolve(...segments) {
     const stack = [];
 
@@ -51,6 +83,10 @@ export class path {
     return '/' + stack.join('/');
   }
 
+  /**
+   * @param {String} path
+   * @returns {String}
+   */
   static normalize(path) {
     return path
       .replace(/\\/g, '/')
@@ -62,74 +98,104 @@ export class path {
 export class fs {
   static dbName = 'database';
   static storeName = 'files';
+
+  /** @type {IDBDatabase|null} */
   static db = null;
 
+  /** @returns {Promise<void>} */
   static async init() {
     return new Promise(async (resolve, reject) => {
       const request = indexedDB.open(fs.dbName, 1);
 
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
+      request.onupgradeneeded = (evt) => {
+        const db = evt.target.result;
         if (!db.objectStoreNames.contains(fs.storeName)) {
           db.createObjectStore(fs.storeName, { keyPath: 'name' });
         }
       };
 
-      request.onsuccess = (event) => {
-        fs.db = event.target.result;
+      request.onsuccess = (evt) => {
+        fs.db = evt.target.result;
         resolve();
       };
 
-      request.onerror = (event) => {
-        reject('Failed to initialize IndexedDB:', event.target.error);
+      request.onerror = (evt) => {
+        reject('Failed to initialize IndexedDB:', evt.target.error);
       };
     });
   }
 
+  /**
+   * @param {IDBTransactionMode} mode
+   * @returns {Promise<IDBObjectStore>}
+   */
   static async transaction(mode) {
     if (!fs.db) await fs.init();
     return fs.db.transaction(fs.storeName, mode).objectStore(fs.storeName);
   }
 
-  static async write(path, content) {
+  /**
+   * @param {String} path
+   * @param {String} content
+   * @param {number} date
+   * @returns {Promise<String>}
+   */
+  static async write(path, content = '', date = new Date().getTime()) {
     return new Promise(async (resolve, reject) => {
       const store = await fs.transaction('readwrite');
-      const request = store.put({ name: path, content });
+      const request = store.put({ name: path, date, content });
 
-      request.onsuccess = () => resolve(`Item '${path}' written successfully.`);
-      request.onerror = (event) => reject(`Failed to write item: ${event.target.error}`);
+      request.onsuccess = () => resolve(`Item '${path}' at '${date}' written successfully.`);
+      request.onerror = (evt) => reject(`Failed to write item: ${evt.target.error}`);
     });
   }
 
-  static async read(path) {
+  /**
+   * @param {String} path
+   * @param {Boolean} refresh
+   * @param {Boolean} lookup
+   * @returns {Promise<object|String|null>}
+   */
+  static async read(path, refresh = false, lookup = false) {
     return new Promise(async (resolve, reject) => {
       const store = await fs.transaction('readonly');
       const request = store.get(path);
 
-      request.onsuccess = async (event) => {
-        const item = event.target.result;
-        if (item) {
-          resolve(item.content);
-        } else {
-          resolve(await fs.fetch(path));
+      request.onsuccess = async (evt) => {
+        const item = evt.target.result;
+        let content;
+        if (!lookup) {
+          if (item && !refresh) {
+            ({ content } = item)
+          } else {
+            content = await fs.fetch(path)
+          }
+          fs.write(path, content)
+          resolve(content);
         }
+        resolve(item)
       };
 
-      request.onerror = (event) => reject(`Failed to read item: ${event.target.error}`);
+      request.onerror = (evt) => reject(`Failed to read item: ${evt.target.error}`);
     });
   }
 
+  /**
+   * @param {String} url
+   * @returns {Promise<String>}
+   */
   static async fetch(url) {
     return new Promise(async (resolve, reject) => {
       await axios.get(__dirname + url)
-        .then(response => {
-          fs.write(url, response.data)
-          resolve(response.data)
-        })
+        .then(response => resolve(response.data))
         .catch(error => reject('Error fetching the file:', error));
     })
   }
 
+  /**
+   * @param {String} path
+   * @returns {Promise<String>}
+   */
   static async delete(path = '') {
     return new Promise(async (resolve, reject) => {
       if (!path) {
@@ -140,33 +206,58 @@ export class fs {
       const request = store.delete(path);
 
       request.onsuccess = () => resolve(`Item '${path}' deleted successfully.`);
-      request.onerror = (event) => reject(`Failed to delete item: ${event.target.error}`);
+      request.onerror = (evt) => reject(`Failed to delete item: ${evt.target.error}`);
     });
   }
 
+  /**
+   * @param {String} path
+   * @returns {Promise<Array>}
+   */
   static async list(path = '') {
     return new Promise(async (resolve, reject) => {
       const store = await fs.transaction('readonly');
       const request = store.getAllKeys();
 
-      request.onsuccess = (event) => {
-        const allKeys = event.target.result;
-        const itemsInDirectory = allKeys.filter(key => key.startsWith(path));
-        resolve(itemsInDirectory);
+      request.onsuccess = (evt) => {
+        const allKeys = evt.target.result;
+        const items = allKeys.filter(key => key.startsWith(path));
+        resolve(items);
       };
 
-      request.onerror = (event) => reject(`Failed to list items: ${event.target.error}`);
+      request.onerror = (evt) => reject(`Failed to list items: ${evt.target.error}`);
     });
   }
 
+  /**
+   * @param {String} path 
+   * @returns {Promise<String|Date>}
+   */
   static async exist(path) {
     return new Promise(async (resolve, reject) => {
-      const store = await fs.transaction('readonly');
-      const request = store.getKey(path);
-
-      request.onsuccess = (event) => resolve(!!event.target.result);
-      request.onerror = (event) => reject(`Failed to check item existence: ${event.target.error}`);
+      await fs.read(path, false, true)
+        .then(({ date }) => resolve(date))
+        .catch(error => reject(`Failed to check item existence: ${error}`))
     });
+  }
+
+  /**
+   * @param {String} path
+   * @param {Boolean} del
+   * @return {Promise<Array>} 
+   */
+  static async isOld(path = '', del = true) {
+    const allKeys = await fs.list(path)
+    const oldKeys = [];
+
+    allKeys.forEach(async (key) => {
+      const date = await fs.exist(key)
+      if (date < oldDate) {
+        del ? fs.delete(key) : oldKeys.push(key);
+      }
+    })
+
+    return oldKeys;
   }
 }
 

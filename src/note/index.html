@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paint App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            cursor: crosshair;
+            background-color: #fff;
+        }
+
+        .toolbar {
+            margin-bottom: 10px;
+        }
+
+        .toolbar button,
+        .toolbar input {
+            margin-right: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toolbar">
+        <input type="color" id="colorPicker" value="#000000" />
+        <input type="range" id="brushSize" min="1" max="20" value="5" />
+        <button id="clearCanvas">Clear</button>
+        <button id="saveCanvas">Save</button>
+    </div>
+
+    <canvas id="paintCanvas" width="800" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d');
+        const colorPicker = document.getElementById('colorPicker');
+        const brushSize = document.getElementById('brushSize');
+        const clearCanvas = document.getElementById('clearCanvas');
+        const saveCanvas = document.getElementById('saveCanvas');
+
+        let isPainting = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Start painting
+        canvas.addEventListener('mousedown', (e) => {
+            isPainting = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        // Stop painting
+        canvas.addEventListener('mouseup', () => {
+            isPainting = false;
+            ctx.beginPath(); // Reset the path for the next stroke
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            isPainting = false;
+            ctx.beginPath();
+        });
+
+        // Paint on the canvas
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isPainting) return;
+
+            ctx.strokeStyle = colorPicker.value;
+            ctx.lineWidth = brushSize.value;
+            ctx.lineCap = 'round';
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        // Clear the canvas
+        clearCanvas.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // Save the canvas as an image
+        saveCanvas.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'my_drawing.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    </script>
+
+</body>
+
+</html>

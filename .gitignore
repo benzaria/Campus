@@ -1,4 +1,4 @@
-# dirs
+# dirs #
 node_modules/
 /assets/
 /data/
@@ -9,9 +9,9 @@ dist/
 web-page/
 deprecated/
 .history/
-css/
+#css/
 
-# files
+# files #
 *.old
 git-cmd.*
 tsconfig*.json
@@ -23,3 +23,4 @@ tokens.json
 .env
 *.txt
 version.json
+build.js

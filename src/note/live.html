@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric.js Paint App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            cursor: crosshair;
+            background-color: #fff;
+        }
+
+        .toolbar {
+            margin-bottom: 10px;
+        }
+
+        .toolbar input,
+        .toolbar button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toolbar">
+        <input type="color" id="colorPicker" value="#000000" />
+        <input type="range" id="brushSize" min="1" max="20" value="5" />
+        <button id="clearCanvas">Clear</button>
+        <button id="saveCanvas">Save</button>
+    </div>
+
+    <canvas id="paintCanvas" width="800" height="500"></canvas>
+
+    <script type="module">
+        import * as fabric from 'fabric';
+
+        // Initialize the canvas
+        const canvas = new fabric.Canvas('paintCanvas');
+        canvas.isDrawingMode = true;
+
+        // Set initial brush settings
+        canvas.freeDrawingBrush.color = '#000000';
+        canvas.freeDrawingBrush.width = 5;
+
+        // Get DOM elements
+        const colorPicker = document.getElementById('colorPicker');
+        const brushSize = document.getElementById('brushSize');
+        const clearCanvas = document.getElementById('clearCanvas');
+        const saveCanvas = document.getElementById('saveCanvas');
+
+        // Update brush color
+        colorPicker.addEventListener('input', (e) => {
+            canvas.freeDrawingBrush.color = e.target.value;
+        });
+
+        // Update brush size
+        brushSize.addEventListener('input', (e) => {
+            canvas.freeDrawingBrush.width = e.target.value;
+        });
+
+        // Clear the canvas
+        clearCanvas.addEventListener('click', () => {
+            canvas.clear();
+        });
+
+        // Save the canvas as an image
+        saveCanvas.addEventListener('click', () => {
+            const dataURL = canvas.toDataURL();
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'my_drawing.png';
+            link.click();
+        });
+    </script>
+
+</body>
+
+</html>

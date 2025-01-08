@@ -15,6 +15,8 @@ const log = console.log;
         log('list', await fs.list())
         log('read', tree)
 
+        log('isOld', await fs.isOld())
+
     }
 
     test();

@@ -1,7 +1,7 @@
 :root {
   /* --sidebar-left-width: 200px;*/
   --titlebar-height: 36px;
-  --dom-height: 100%;
+  --dom-height: calc(100vh - var(--titlebar-height));
 }
 
 dom {

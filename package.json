@@ -16,8 +16,9 @@
     "homepage": "https://Med-Campus.github.io",
     "scripts": {
         "start": "vite --host",
-        "build": "node build.js",
-        "start:dist": "py -m http.server 8000",
+        "build": "vite build",
+        "publish": "vite build",
+        "start:dist": "py -m http.server 3000",
         "api:mail": "node src/apis/mailer.js",
         "api:db": "node src/apis/database.js",
         "api:strg": "node src/apis/storage.js",
@@ -32,6 +33,7 @@
     "dependencies": {
         "axios": "^1.7.9",
         "dotenv": "^16.4.7",
+        "fabric": "^6.5.4",
         "google-auth-library": "^9.15.0",
         "googleapis": "^144.0.0",
         "jquery": "^3.7.1",
