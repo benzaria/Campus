@@ -2,10 +2,13 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import fs from 'fs'
 
+const args = process.argv.slice(4)
+console.log(args)
+
 const option = { recursive: true, force: true }
 
 // Directories and paths
-const distDir = path.resolve('dist');
+const distDir = path.resolve(args ? args[0] : 'dist');
 const srcDir = path.resolve('src', 'app')
 const destDataDir = path.join(distDir, 'data');
 const srcDataDir = path.resolve(srcDir, 'data');

@@ -16,9 +16,9 @@
     "homepage": "https://Med-Campus.github.io",
     "scripts": {
         "start": "vite --host",
-        "build": "vite build",
-        "publish": "vite build",
         "start:dist": "py -m http.server 3000",
+        "build": "vite build -- dist",
+        "publish": "vite build -- docs",
         "api:mail": "node src/apis/mailer.js",
         "api:db": "node src/apis/database.js",
         "api:strg": "node src/apis/storage.js",
