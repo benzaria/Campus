@@ -5,6 +5,7 @@ import './dev/dev';
 
 
 $(async function () {
+    //console.log(await fs.read('data/tree.json'))
     const tree = await fs.read('data/tree.json')
 
     generate('module', tree).catch(console.error)

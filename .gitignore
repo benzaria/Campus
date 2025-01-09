@@ -4,6 +4,7 @@ node_modules/
 /data/
 /test*
 dist/
+docs/
 .vscode/
 .backup/
 deprecated/
@@ -19,7 +20,7 @@ package_.json
 credentials.json
 *-token.json
 tokens.json
-.env
+d.env
 *.txt
 version.json
 *build*.*

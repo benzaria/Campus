@@ -8,7 +8,7 @@ const log = console.log;
 
     async function test() {
 
-        log(await fs.delete())
+        // log(await fs.delete())
 
         const tree = await fs.read('data/form.json')
 

@@ -1,16 +1,26 @@
 import $ from 'jquery';
 import axios from 'axios';
 
+let env;
+
+/* Initialisation */
+
+const init = async () => {
+  env = await fs.read('.env')
+}
+
 /* Constants */
 
-export const constant = {
+export { env, constant };
+
+const constant = {
   $root: $(document.documentElement),
   $DOM: $(document),
   __protocol: globalThis.location.protocol,
   __host: globalThis.location.host,
   __base: globalThis.location.origin,
   __dirname: globalThis.location.href,
-  oldDate: new Date().getTime() + 1000 * 60 * 60 * 24 * 30 * 1,
+  oldDate: new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 1,
   icons: {
     folder: 'folder',
     file: 'file',
@@ -47,7 +57,7 @@ export const icons = {
   powerpoint: 'file-powerpoint',
 }
 
-export const oldDate = new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 1
+export const oldDate = new Date().getTime() //- 1000 * 60 * 60 * 24 * 30 * 1
 
 /* Classes */
 
@@ -150,11 +160,16 @@ export class fs {
     });
   }
 
+
   /**
+   * @typedef {Object} fsRead
+   * @property {Number} date
+   * @property {String} content
+   * 
    * @param {String} path
    * @param {Boolean} refresh
    * @param {Boolean} lookup
-   * @returns {Promise<object|String|null>}
+   * @returns {Promise<fsRead|String|null>}
    */
   static async read(path, refresh = false, lookup = false) {
     return new Promise(async (resolve, reject) => {
@@ -212,7 +227,7 @@ export class fs {
 
   /**
    * @param {String} path
-   * @returns {Promise<Array>}
+   * @returns {Promise<String[]>}
    */
   static async list(path = '') {
     return new Promise(async (resolve, reject) => {
@@ -231,7 +246,7 @@ export class fs {
 
   /**
    * @param {String} path 
-   * @returns {Promise<String|Date>}
+   * @returns {Promise<Boolean|Date>}
    */
   static async exist(path) {
     return new Promise(async (resolve, reject) => {
@@ -244,7 +259,7 @@ export class fs {
   /**
    * @param {String} path
    * @param {Boolean} del
-   * @return {Promise<Array>} 
+   * @return {Promise<String[]>} 
    */
   static async isOld(path = '', del = true) {
     const allKeys = await fs.list(path)
@@ -261,3 +276,6 @@ export class fs {
   }
 }
 
+
+/* Initialisation */
+init()
