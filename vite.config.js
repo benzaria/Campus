@@ -22,7 +22,7 @@ if (fs.existsSync(appDataDir))
     fs.cpSync(appDataDir, outDataDir, option)
 
 if (fs.existsSync(envFile))
-    fs.cpSync(envFile, outDir + '/.env', option)
+    fs.cpSync(envFile, outDir + '/env.json', option)
 
 export default defineConfig({
     root: appDir,
