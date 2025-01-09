@@ -6,8 +6,8 @@ let env;
 /* Initialisation */
 
 const init = async () => {
-  env = await fs.read('.env')
-  console.log(env)
+  env = await fs.read('env.json')
+  console.log('env', env)
 }
 
 /* Constants */
