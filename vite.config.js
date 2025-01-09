@@ -2,28 +2,37 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import fs from 'fs'
 
+const args = process.argv.slice(2)
+console.log(args)
+
 const option = { recursive: true, force: true }
 
 // Directories and paths
-const distDir = path.resolve('dist');
-const srcDir = path.resolve('src', 'app')
-const destDataDir = path.join(distDir, 'data');
-const srcDataDir = path.resolve(srcDir, 'data');
+const outDir = path.resolve(args[2] ?? 'dist');
+const srcDir = path.resolve('src');
+const appDir = path.resolve(srcDir, 'app');
+const envFile = path.resolve(appDir, '.env');
+const outDataDir = path.join(outDir, 'data');
+const appDataDir = path.resolve(appDir, 'data');
 
-if (fs.existsSync(distDir))
-    fs.rmSync(distDir, option)
+if (fs.existsSync(outDir))
+    fs.rmSync(outDir, option)
 
-if (fs.existsSync(srcDataDir))
-    fs.cpSync(srcDataDir, destDataDir, option)
+if (fs.existsSync(appDataDir))
+    fs.cpSync(appDataDir, outDataDir, option)
+
+if (fs.existsSync(envFile))
+    fs.cpSync(envFile, outDir + '/.env', option)
 
 export default defineConfig({
-    root: srcDir,
+    root: appDir,
+    base: './',
     build: {
-        outDir: distDir,
+        outDir: outDir,
         emptyOutDir: false,
         rollupOptions: {
             input: {
-                main: path.resolve(srcDir, 'index.html'),
+                main: path.resolve(appDir, 'index.html'),
             },
             output: {
                 entryFileNames: 'script.js',
@@ -47,7 +56,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@': srcDir
+            '@': appDir
         },
     },
     server: {

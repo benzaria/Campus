@@ -1,4 +1,4 @@
-# Electron App
+# Progresive Web App
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/benzaria/Campus/total)
 
