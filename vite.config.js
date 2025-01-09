@@ -11,7 +11,7 @@ const option = { recursive: true, force: true }
 const outDir = path.resolve(args[2] ?? 'dist');
 const srcDir = path.resolve('src');
 const appDir = path.resolve(srcDir, 'app');
-const envFile = path.resolve(appDir, '.env');
+const envFile = path.resolve(appDir, 'env.json');
 const outDataDir = path.join(outDir, 'data');
 const appDataDir = path.resolve(appDir, 'data');
 
