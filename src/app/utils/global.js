@@ -202,7 +202,8 @@ export class fs {
    */
   static async fetch(url) {
     return new Promise(async (resolve, reject) => {
-      await axios.get(__dirname + url)
+      const __source = url.startsWith('/') ? __base : __dirname;
+      await axios.get(__source + url)
         .then(response => resolve(response.data))
         .catch(error => reject('Error fetching the file:', error));
     })
